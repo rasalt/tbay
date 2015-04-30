@@ -8,11 +8,12 @@ from datetime import datetime
 
 
 # Query the database
-print("Printing all the rows from the User table ")
+
 print("Printing the first user ")
 firstuser = session.query(User).first()
 print("First: {}".format(firstuser))
 
+print("Printing all the rows from the User table ")
 userlist = []
 userlist = session.query(User).all()
 for user in userlist:
@@ -39,4 +40,22 @@ for item in itemlist:
   
 # Return the item id and description for all baseballs which were created in the past.  Remember to import the datetime object: from datetime import datetime
 itemlist = session.query(User.id, User.name).filter(User.name == "baseball", Item.start_time < datetime.utcnow()).all()
-  
+
+item = session.query(Item).first()
+item.name = "CricketBall"
+session.commit()
+
+itemlist = []
+itemlist = session.query(Item.name).order_by(Item.name).all()
+for item in itemlist:
+  print("item {}".format(item))
+
+print("Deleting the first user")
+user = session.query(User).first()
+session.delete(user)
+session.commit()
+print("Printing all the rows from the User table ")
+userlist = []
+userlist = session.query(User).all()
+for user in userlist:
+  print("user {}".format(user))
